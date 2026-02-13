@@ -1,6 +1,6 @@
 import { sedeLocations } from '../data/events';
 import { MapPinIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logofinal-Photoroom.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();

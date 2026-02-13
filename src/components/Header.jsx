@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import logo from '../assets/images/logo.png';
+import logo from '../assets/images/logofinal-Photoroom.png';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
