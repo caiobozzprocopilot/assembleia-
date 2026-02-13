@@ -8,7 +8,7 @@ const Diretrizes = () => {
   ];
 
   return (
-    <section id="diretrizes" className="py-20 bg-gradient-to-br from-brown-900 via-brown-800 to-gold-900 text-white">
+    <section id="diretrizes" className="py-20 bg-gradient-to-br from-brown-900 via-brown-800 to-accent-900 text-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -16,7 +16,7 @@ const Diretrizes = () => {
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               DIRETRIZES PARA 2026
             </h2>
-            <div className="w-24 h-1 bg-gold-400 mx-auto"></div>
+            <div className="w-24 h-1 bg-accent-400 mx-auto"></div>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -24,14 +24,14 @@ const Diretrizes = () => {
             <div className="space-y-6">
               {/* Semana de Oração */}
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
-                <h3 className="text-2xl font-bold text-gold-300 mb-4 flex items-center">
+                <h3 className="text-2xl font-bold text-accent-300 mb-4 flex items-center">
                   <CalendarDaysIcon className="w-8 h-8 mr-3" />
                   SEMANA de Oração
                 </h3>
                 <p className="text-white/90 mb-2">
                   Para Celebração da Ceia
                 </p>
-                <p className="text-gold-200 font-semibold">
+                <p className="text-accent-200 font-semibold">
                   do Senhor e no 1º SÁBADO Consagração 8h em todas as Congregações Direção Círculo de Oração;
                 </p>
               </div>
@@ -48,19 +48,19 @@ const Diretrizes = () => {
               <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
                 <ul className="space-y-3 text-white/90">
                   <li className="flex items-start">
-                    <span className="text-gold-400 mr-2">•</span>
+                    <span className="text-accent-400 mr-2">•</span>
                     <span>
                       No 1º Sábado de cada mês das 8h às 11h30m Oração Consagração Círculo de Oração
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-gold-400 mr-2">•</span>
+                    <span className="text-accent-400 mr-2">•</span>
                     <span>
                       A Ceia do Senhor nas Congregações será realizado sempre no 1º Domingo de cada mês 19h
                     </span>
                   </li>
                   <li className="flex items-start">
-                    <span className="text-gold-400 mr-2">•</span>
+                    <span className="text-accent-400 mr-2">•</span>
                     <span>
                       Na Celebração da Ceia do Senhor fazer um apelo na Oferta e se possível preparar uma toalha para o Altar. (Cada congregação deve virem lavar toalha Sede)
                     </span>
@@ -69,8 +69,8 @@ const Diretrizes = () => {
               </div>
 
               {/* Reuniões Presbitério */}
-              <div className="bg-gold-600/20 backdrop-blur-md rounded-xl p-6 border-2 border-gold-400">
-                <h3 className="text-2xl font-bold text-gold-300 mb-4 flex items-center">
+              <div className="bg-accent-600/20 backdrop-blur-md rounded-xl p-6 border-2 border-accent-400">
+                <h3 className="text-2xl font-bold text-accent-300 mb-4 flex items-center">
                   <BriefcaseIcon className="w-8 h-8 mr-3" />
                   REUNIÕES DO PRESBITÉRIO SERÁ REALIZADA A CADA 4 MESES
                 </h3>
@@ -82,7 +82,7 @@ const Diretrizes = () => {
                       className="bg-white/10 rounded-lg p-3 flex justify-between items-center"
                     >
                       <span className="font-semibold">{reuniao.title}</span>
-                      <span className="text-gold-300">{reuniao.date}</span>
+                      <span className="text-accent-300">{reuniao.date}</span>
                     </div>
                   ))}
                 </div>
@@ -122,7 +122,7 @@ const Diretrizes = () => {
                   </p>
 
                   <div className="bg-white/5 rounded-lg p-4">
-                    <h4 className="font-bold text-gold-300 mb-2">
+                    <h4 className="font-bold text-accent-300 mb-2">
                       EXEMPLO DE LIDERANÇA NASCIDA DO SERVIÇO
                     </h4>
                     <p className="text-sm leading-relaxed">
@@ -131,7 +131,7 @@ const Diretrizes = () => {
                   </div>
 
                   <div className="bg-white/5 rounded-lg p-4">
-                    <h4 className="font-bold text-gold-300 mb-2">
+                    <h4 className="font-bold text-accent-300 mb-2">
                       Jesus ensinou: Liderança que não serve vira tirania.
                     </h4>
                     <p className="text-sm leading-relaxed">
@@ -139,7 +139,7 @@ const Diretrizes = () => {
                     </p>
                   </div>
 
-                  <p className="text-gold-300 font-semibold italic">
+                  <p className="text-accent-300 font-semibold italic">
                     Pense nisso!
                   </p>
                 </div>
@@ -153,3 +153,4 @@ const Diretrizes = () => {
 };
 
 export default Diretrizes;
+

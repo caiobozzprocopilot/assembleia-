@@ -1,5 +1,6 @@
 import { sedeLocations } from '../data/events';
 import { MapPinIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
+import logo from '../assets/images/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -9,7 +10,7 @@ const Footer = () => {
   };
 
   return (
-    <footer id="contato" className="bg-gradient-to-br from-brown-900 via-brown-800 to-gold-900 text-white">
+    <footer id="contato" className="bg-gradient-to-br from-brown-900 via-brown-800 to-accent-900 text-white">
       {/* Main Footer Content */}
       <div className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
@@ -17,19 +18,21 @@ const Footer = () => {
             {/* About Section */}
             <div>
               <div className="flex items-center space-x-3 mb-6">
-                <div className="w-16 h-16 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white font-bold text-2xl">AD</span>
-                </div>
+                <img 
+                  src={logo} 
+                  alt="Igreja Assembleia de Deus - Ortigueira/PR" 
+                  className="h-16 w-auto object-contain"
+                />
                 <div>
                   <div className="font-bold text-xl leading-tight">Igreja Assembleia</div>
-                  <div className="text-sm text-gold-200">de Deus - Ortigueira/PR</div>
+                  <div className="text-sm text-accent-200">de Deus - Ortigueira/PR</div>
                 </div>
               </div>
               <p className="text-white/80 leading-relaxed mb-4">
                 O ano de Voltar ao Primeiro Amor - Um ano de renovação espiritual, dedicação e
                 compromisso com o Reino de Deus.
               </p>
-              <div className="flex items-center space-x-2 text-gold-300">
+              <div className="flex items-center space-x-2 text-accent-300">
                 <MapPinIcon className="w-5 h-5" />
                 <span className="text-sm">Ortigueira, Paraná - Brasil</span>
               </div>
@@ -37,12 +40,12 @@ const Footer = () => {
 
             {/* Templo Sede e Congregações */}
             <div>
-              <h3 className="text-xl font-bold mb-4 text-gold-300">
+              <h3 className="text-xl font-bold mb-4 text-accent-300">
                 Templo Sede e Congregações
               </h3>
               <div className="grid grid-cols-2 gap-2">
                 {sedeLocations.slice(0, 10).map((location, index) => (
-                  <div key={index} className="text-sm text-white/80 hover:text-gold-300 transition-colors">
+                  <div key={index} className="text-sm text-white/80 hover:text-accent-300 transition-colors">
                     {location}
                   </div>
                 ))}
@@ -51,15 +54,15 @@ const Footer = () => {
 
             {/* Contact & Leadership */}
             <div>
-              <h3 className="text-xl font-bold mb-4 text-gold-300">Liderança</h3>
+              <h3 className="text-xl font-bold mb-4 text-accent-300">Liderança</h3>
               <div className="space-y-4">
                 <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-                  <p className="text-sm text-gold-200 mb-1">Pastor Presidente</p>
+                  <p className="text-sm text-accent-200 mb-1">Pastor Presidente</p>
                   <p className="font-bold text-lg">Pr. Edison Camargo</p>
                   <p className="text-sm text-white/70">Vice: Pr. Flavio Luhn</p>
                 </div>
                 <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-                  <p className="text-sm text-gold-200 mb-1">União Feminina</p>
+                  <p className="text-sm text-accent-200 mb-1">União Feminina</p>
                   <p className="font-bold text-lg">Irmã Rosana Camargo</p>
                   <p className="text-sm text-white/70">Coordenadora Geral</p>
                 </div>
@@ -68,7 +71,7 @@ const Footer = () => {
               {/* CTA Buttons */}
               <div className="mt-6 space-y-3">
                 <a
-                  href="https://wa.me/5542999999999"
+                  href="https://wa.me/5541996945779"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-lg"
@@ -84,34 +87,34 @@ const Footer = () => {
 
           {/* Diretoria do Biênio */}
           <div className="border-t border-white/20 pt-8 mb-8">
-            <h3 className="text-2xl font-bold text-gold-300 mb-6 text-center">
+            <h3 className="text-2xl font-bold text-accent-300 mb-6 text-center">
               Diretoria deste Biênio - Ano 2025 à 2027
             </h3>
             <div className="grid md:grid-cols-3 gap-6 text-sm">
               <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-                <p className="text-gold-200 font-semibold mb-2">Presidente</p>
+                <p className="text-accent-200 font-semibold mb-2">Presidente</p>
                 <p className="text-white">Pr. Edison Camargo</p>
                 <p className="text-white/70">Vice Presidente: Pr. Flavio Luhn</p>
               </div>
               <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-                <p className="text-gold-200 font-semibold mb-2">2º Vice Presidente</p>
+                <p className="text-accent-200 font-semibold mb-2">2º Vice Presidente</p>
                 <p className="text-white">Pr. Laudeli S dos Santos</p>
               </div>
               <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-                <p className="text-gold-200 font-semibold mb-2">1° Gestor Financeiro</p>
+                <p className="text-accent-200 font-semibold mb-2">1° Gestor Financeiro</p>
                 <p className="text-white">Ev Silvio V Prado</p>
                 <p className="text-white/70">2º Gestor Financeiro: Pr. José F das Chagas</p>
               </div>
             </div>
             <div className="mt-4 bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-              <p className="text-gold-200 font-semibold mb-2">Conselho Eclesiástico e de Ética</p>
+              <p className="text-accent-200 font-semibold mb-2">Conselho Eclesiástico e de Ética</p>
               <p className="text-white text-sm">
                 Pr. Flávio Luhn – Pr Laudeli Santos / Pr. Antônio Correa, Pr Milton Guedes,
                 Relator: Pr. Ronaldo Pescara
               </p>
             </div>
             <div className="mt-4 bg-white/10 rounded-lg p-4 backdrop-blur-sm">
-              <p className="text-gold-200 font-semibold mb-2">Conselho Fiscal</p>
+              <p className="text-accent-200 font-semibold mb-2">Conselho Fiscal</p>
               <p className="text-white text-sm">
                 Pr.de. Ronaldo Pescara / V Pres. Pr. Milton Guedes, Relator, Interino - Ev Maicon
                 Estevão
@@ -128,7 +131,7 @@ const Footer = () => {
             <p>© {currentYear} Igreja Assembleia de Deus - Ortigueira/PR. Todos os direitos reservados.</p>
             <button
               onClick={scrollToTop}
-              className="mt-4 md:mt-0 flex items-center space-x-2 hover:text-gold-300 transition-colors"
+              className="mt-4 md:mt-0 flex items-center space-x-2 hover:text-accent-300 transition-colors"
             >
               <span>Voltar ao topo</span>
               <ArrowUpIcon className="w-4 h-4" />
@@ -141,3 +144,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

@@ -1,3 +1,5 @@
+import rosanaImage from '../assets/images/rosana.jpeg';
+
 const UniaoFeminina = () => {
   return (
     <section className="py-20 bg-gradient-to-br from-pink-50 via-white to-purple-50">
@@ -18,6 +20,25 @@ const UniaoFeminina = () => {
 
           {/* Content Card */}
           <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            {/* Header com foto */}
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <img 
+                  src={rosanaImage} 
+                  alt="Irmã Rosana Camargo" 
+                  className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white shadow-xl"
+                />
+                <div className="text-center md:text-left text-white">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                    Irmã Rosana Camargo
+                  </h3>
+                  <p className="text-lg text-pink-100">
+                    Coordenadora Geral da União Feminina
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="p-8 md:p-12">
               <div className="mb-8">
                 <p className="text-lg text-gray-700 leading-relaxed mb-4">
@@ -73,3 +94,4 @@ const UniaoFeminina = () => {
 };
 
 export default UniaoFeminina;
+

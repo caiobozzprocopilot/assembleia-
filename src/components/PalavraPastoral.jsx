@@ -1,3 +1,5 @@
+import casalImage from '../assets/images/casal.jpeg';
+
 const PalavraPastoral = () => {
   return (
     <section id="palavra-pastoral" className="py-20 bg-gray-50">
@@ -5,21 +7,44 @@ const PalavraPastoral = () => {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-bold text-brown-800 mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-800 mb-4">
               Palavra Pastoral
             </h2>
-            <div className="w-24 h-1 bg-gold-500 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-accent-500 mx-auto mb-6"></div>
             <p className="text-xl text-gray-600">Janeiro de 2026</p>
           </div>
 
           {/* Content */}
-          <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-            <div className="prose prose-lg max-w-none">
-              <p className="text-gray-700 leading-relaxed mb-6">
-                <strong>Amados obreiros, esposas de obreiros, irmãos, irmãs e todos os membros do nosso querido Campo Eclesiástico de Ortigueira – PR,</strong>
-                <br />
-                <span className="text-gold-600 font-semibold">a paz do Senhor Jesus!</span>
-              </p>
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            {/* Header com foto */}
+            <div className="bg-gradient-to-r from-brown-700 to-accent-700 p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <img 
+                  src={casalImage} 
+                  alt="Pr. Edison e Irmã Rosana Camargo" 
+                  className="w-32 h-32 md:w-48 md:h-48 rounded-lg object-cover border-4 border-white shadow-xl"
+                />
+                <div className="text-center md:text-left text-white">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                    Pr. Edison Camargo
+                  </h3>
+                  <p className="text-lg text-accent-200 mb-1">
+                    Pastor Presidente
+                  </p>
+                  <p className="text-md text-accent-100">
+                    com Irmã Rosana Camargo
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-8 md:p-12">
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  <strong>Amados obreiros, esposas de obreiros, irmãos, irmãs e todos os membros do nosso querido Campo Eclesiástico de Ortigueira – PR,</strong>
+                  <br />
+                  <span className="text-accent-600 font-semibold">a paz do Senhor Jesus!</span>
+                </p>
 
               <p className="text-gray-700 leading-relaxed mb-6">
                 Com o coração cheio de gratidão a Deus, dirijo-me a cada um de vocês, pedindo que Deus caminhe conosco em 2026 com dedicação, temor e compromisso com o Reino. Louvamos a Deus por tudo que Ele tem feito em nosso meio, pelas vitórias alcançadas e pelos desafios e livramentos concedidos por Ele!
@@ -30,7 +55,7 @@ const PalavraPastoral = () => {
                 <strong className="text-brown-800 text-xl">"O Ano de Voltar ao Primeiro Amor".</strong>
               </p>
 
-              <blockquote className="border-l-4 border-gold-500 pl-6 py-4 my-8 bg-gold-50 italic text-gray-800">
+              <blockquote className="border-l-4 border-accent-500 pl-6 py-4 my-8 bg-accent-50 italic text-gray-800">
                 Vivemos dias em que é possível estar ocupado, cumprir tarefas, exercer funções e, ainda assim, correr o risco de esfriar o coração. O Senhor, porém, nos chama de volta à simplicidade da fé, à alegria fervorosa, à devoção fiel e ao zelo pela casa de Deus e ao amor genuíno por suas almas. Assim como está escrito em Apocalipse 2:4: "Tenho, porém, contra ti que deixaste o teu primeiro amor." Essa palavra não é para condenar, mas para despertar, alinhar e restaurar.
               </blockquote>
 
@@ -63,8 +88,10 @@ const PalavraPastoral = () => {
           </div>
         </div>
       </div>
+    </div>
     </section>
   );
 };
 
 export default PalavraPastoral;
+

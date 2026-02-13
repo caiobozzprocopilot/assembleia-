@@ -11,7 +11,7 @@ const Alvos = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-brown-800 mb-4">
               ALVOS PARA ANO DE 2026
             </h2>
-            <div className="w-24 h-1 bg-gold-500 mx-auto"></div>
+            <div className="w-24 h-1 bg-accent-500 mx-auto"></div>
           </div>
 
           {/* Goals Grid */}
@@ -19,10 +19,10 @@ const Alvos = () => {
             {goals2026.map((goal) => (
               <div
                 key={goal.id}
-                className="bg-gradient-to-br from-gold-50 to-brown-50 rounded-xl p-6 shadow-lg border-l-4 border-gold-500 hover:shadow-xl transition-shadow"
+                className="bg-gradient-to-br from-accent-50 to-brown-50 rounded-xl p-6 shadow-lg border-l-4 border-accent-500 hover:shadow-xl transition-shadow"
               >
                 <div className="flex items-start mb-4">
-                  <div className="bg-gold-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 flex-shrink-0">
+                  <div className="bg-accent-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 flex-shrink-0">
                     {goal.id}
                   </div>
                   <h3 className="text-xl font-bold text-brown-800">{goal.title}</h3>
@@ -33,10 +33,8 @@ const Alvos = () => {
                     {goal.current}
                   </p>
                   <p className="text-gray-700">
-                    <span className="font-semibold text-gold-700 uppercase">
-                      {goal.goal.split('é')[0]}é
-                    </span>
-                    {goal.goal.split('é')[1]}
+                    <span className="font-semibold text-accent-700">NOSSA META É</span>{' '}
+                    {goal.goal}
                   </p>
                 </div>
               </div>
@@ -44,7 +42,7 @@ const Alvos = () => {
           </div>
 
           {/* Reforms Section */}
-          <div className="bg-gradient-to-br from-brown-100 to-gold-100 rounded-2xl p-8 mb-16 shadow-xl">
+          <div className="bg-gradient-to-br from-brown-100 to-accent-100 rounded-2xl p-8 mb-16 shadow-xl">
             <h3 className="text-3xl font-bold text-brown-800 mb-6 flex items-center">
               <span className="bg-brown-700 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3">
                 <WrenchScrewdriverIcon className="w-6 h-6" />
@@ -57,16 +55,16 @@ const Alvos = () => {
                   key={index}
                   className="flex items-start bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow"
                 >
-                  <span className="text-gold-600 font-bold mr-3 text-lg">
+                  <span className="text-accent-600 font-bold mr-3 text-lg">
                     {index + 1}.
                   </span>
                   <span className="text-gray-700">{reform}</span>
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-center text-brown-700 font-semibold italic bg-white rounded-lg p-3">
-              TODAS AS REFORMAS MAIS SIMPLES DEVEM PASSAR POR REUNIÃO E APROVAÇÃO DA DIRETORIA,
-              COM 3 ORÇAMENTOS DE CUSTOS.
+            <p className="mt-6 text-center text-primary-700 font-semibold italic bg-white rounded-lg p-3">
+              TODAS AS REFORMAS POR MAIS SIMPLES DEVEM PASSAR POR REUNIÃO E APROVAÇÃO DA DIRETORIA,
+              COM 3 ORÇAMENTOS DE CUSTOS
             </p>
           </div>
 
@@ -124,3 +122,4 @@ const Alvos = () => {
 };
 
 export default Alvos;
+

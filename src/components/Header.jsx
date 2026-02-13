@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import logo from '../assets/images/logo.png';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -43,9 +44,11 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-gold-400 to-gold-600 rounded-full flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">AD</span>
-            </div>
+            <img 
+              src={logo} 
+              alt="Igreja Assembleia de Deus - Ortigueira/PR" 
+              className="h-12 w-auto object-contain"
+            />
             <div className={`transition-colors ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
               <div className="font-bold text-lg leading-tight">Igreja Assembleia</div>
               <div className="text-xs opacity-80">de Deus - Ortigueira/PR</div>
@@ -58,7 +61,7 @@ const Header = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className={`font-medium hover:text-gold-500 transition-colors ${
+                className={`font-medium hover:text-accent-500 transition-colors ${
                   isScrolled ? 'text-gray-700' : 'text-white'
                 }`}
               >
@@ -106,3 +109,4 @@ const Header = () => {
 };
 
 export default Header;
+

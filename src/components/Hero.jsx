@@ -4,7 +4,7 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-brown-900 via-brown-800 to-gold-900"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-brown-900 via-brown-800 to-accent-900"
     >
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10">
@@ -15,24 +15,24 @@ const Hero = () => {
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           {/* Church Logo/Badge */}
-          <div className="mb-8 inline-flex items-center justify-center w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full border-4 border-gold-400 shadow-2xl">
-            <ShieldCheckIcon className="w-12 h-12 text-gold-300" />
+          <div className="mb-8 inline-flex items-center justify-center w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full border-4 border-accent-400 shadow-2xl">
+            <ShieldCheckIcon className="w-12 h-12 text-accent-300" />
           </div>
 
           {/* Main Title */}
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            <span className="block text-gold-300 text-3xl md:text-4xl mb-3">
+            <span className="block text-accent-300 text-3xl md:text-4xl mb-3">
               Janeiro de 2026
             </span>
             O ano de Voltar ao
-            <span className="block mt-2 text-gold-400">Primeiro AMOR</span>
+            <span className="block mt-2 text-accent-400">Primeiro AMOR</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-xl md:text-2xl text-white/90 mb-4">
             Igreja Evangélica Assembleia de Deus
           </p>
-          <p className="text-lg md:text-xl text-gold-200 mb-8">
+          <p className="text-lg md:text-xl text-accent-200 mb-8">
             EM ORTIGUEIRA/PR
           </p>
 
@@ -40,13 +40,13 @@ const Hero = () => {
           <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-10 border border-white/20 shadow-2xl">
             <div className="flex flex-col md:flex-row items-center justify-center gap-6">
               <div className="text-center md:text-right">
-                <p className="text-gold-300 font-semibold text-lg mb-2">Pastor Presidente</p>
+                <p className="text-accent-300 font-semibold text-lg mb-2">Pastor Presidente</p>
                 <p className="text-white text-2xl font-bold">Pr. Edison Camargo</p>
                 <p className="text-white/80 text-lg">Vice Presidente: Pr. Flavio Luhn</p>
               </div>
               <div className="w-px h-16 bg-white/30 hidden md:block"></div>
               <div className="text-center md:text-left">
-                <p className="text-gold-300 font-semibold text-lg mb-2">Coordenadora Geral</p>
+                <p className="text-accent-300 font-semibold text-lg mb-2">Coordenadora Geral</p>
                 <p className="text-white text-2xl font-bold">Irmã Rosana Camargo</p>
                 <p className="text-white/80 text-lg">União Feminina</p>
               </div>
@@ -59,7 +59,7 @@ const Hero = () => {
               onClick={() =>
                 document.getElementById('agenda')?.scrollIntoView({ behavior: 'smooth' })
               }
-              className="px-8 py-4 bg-gold-500 hover:bg-gold-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+              className="px-8 py-4 bg-accent-500 hover:bg-accent-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
             >
               Ver Agenda 2026
             </button>
@@ -87,3 +87,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

@@ -34,7 +34,7 @@ const TemaPrimeiroAmor = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-brown-800 mb-4">
               2026 ANO DE VOLTAR AO PRIMEIRO AMOR
             </h2>
-            <div className="w-24 h-1 bg-gold-500 mx-auto"></div>
+            <div className="w-24 h-1 bg-accent-500 mx-auto"></div>
           </div>
 
           {/* Cards Grid */}
@@ -60,7 +60,7 @@ const TemaPrimeiroAmor = () => {
           </div>
 
           {/* Main Content Section */}
-          <div className="bg-gradient-to-br from-brown-50 to-gold-50 rounded-2xl p-8 md:p-12 shadow-xl">
+          <div className="bg-gradient-to-br from-brown-50 to-accent-50 rounded-2xl p-8 md:p-12 shadow-xl">
             <h3 className="text-3xl font-bold text-brown-800 mb-8 text-center">
               ÁREAS EM QUE PRECISAMOS VOLTAR AO PRIMEIRO AMOR
             </h3>
@@ -68,7 +68,7 @@ const TemaPrimeiroAmor = () => {
             <div className="space-y-8">
               {/* Item 1 */}
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <h4 className="text-xl font-bold text-gold-700 mb-3">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
                   1. Voltar ao Amor pela Presença de Deus:
                 </h4>
                 <p className="text-gray-700 leading-relaxed">
@@ -78,7 +78,7 @@ const TemaPrimeiroAmor = () => {
 
               {/* Item 2 */}
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <h4 className="text-xl font-bold text-gold-700 mb-3">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
                   2. Voltar ao Amor pela Palavra LER BÍBLIA!
                 </h4>
                 <p className="text-gray-700 leading-relaxed">
@@ -88,7 +88,7 @@ const TemaPrimeiroAmor = () => {
 
               {/* Item 3 */}
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <h4 className="text-xl font-bold text-gold-700 mb-3">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
                   3. Voltar ao Amor pela Santidade:
                 </h4>
                 <p className="text-gray-700 leading-relaxed">
@@ -98,7 +98,7 @@ const TemaPrimeiroAmor = () => {
 
               {/* Item 4 */}
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <h4 className="text-xl font-bold text-gold-700 mb-3">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
                   4. Voltar ao Amor pela Casa de Deus:
                 </h4>
                 <p className="text-gray-700 leading-relaxed">
@@ -108,7 +108,7 @@ const TemaPrimeiroAmor = () => {
 
               {/* Item 5 */}
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <h4 className="text-xl font-bold text-gold-700 mb-3">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
                   5. Voltar ao Amor pelas Almas:
                 </h4>
                 <p className="text-gray-700 leading-relaxed">
@@ -118,7 +118,7 @@ const TemaPrimeiroAmor = () => {
 
               {/* Item 6 */}
               <div className="bg-white rounded-xl p-6 shadow-md">
-                <h4 className="text-xl font-bold text-gold-700 mb-3">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
                   6. Voltar ao Amor pelo Serviço:
                 </h4>
                 <p className="text-gray-700 leading-relaxed mb-3">
@@ -137,3 +137,4 @@ const TemaPrimeiroAmor = () => {
 };
 
 export default TemaPrimeiroAmor;
+

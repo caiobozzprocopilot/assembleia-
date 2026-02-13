@@ -1,0 +1,1152 @@
+import { useState, useMemo } from 'react';
+import { events2026, congregations } from '../data/events';
+import { MagnifyingGlassIcon, CalendarIcon, BuildingLibraryIcon } from '@heroicons/react/24/outline';
+
+const Agenda = () => {
+  const [selectedMonth, setSelectedMonth] = useState('Todos');
+  const [selectedCongregation, setSelectedCongregation] = useState('Todas');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const months = ['Todos', 'Janeiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+
+  const filteredEvents = useMemo(() => {
+    return events2026.filter((event) => {
+      const matchesMonth = selectedMonth === 'Todos' || event.month === selectedMonth;
+      const matchesCongregation =
+        selectedCongregation === 'Todas' || event.congregation === selectedCongregation;
+      const matchesSearch =
+        searchTerm === '' ||
+        event.event.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        event.congregation.toLowerCase().includes(searchTerm.toLowerCase());
+
+      return matchesMonth && matchesCongregation && matchesSearch;
+    });
+  }, [selectedMonth, selectedCongregation, searchTerm]);
+
+  const eventsByMonth = useMemo(() => {
+    const grouped = {};
+    filteredEvents.forEach((event) => {
+      if (!grouped[event.month]) {
+        grouped[event.month] = [];
+      }
+      grouped[event.month].push(event);
+    });
+    return grouped;
+  }, [filteredEvents]);
+
+  return (
+    <section id="agenda" className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-800 mb-4">
+              Agenda do Campo 2026
+            </h2>
+            <div className="w-24 h-1 bg-accent-500 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600">
+              ANO DE VOLTAR AO PRIMEIRO AMOR - CONGRESSOS e EVENTOS
+            </p>
+            <p className="text-gray-500 mt-2">
+              Todo Campo deve se reunir, TEMPLO SEDE, Escolas de Cooperação e CONGREGAÇÕES. Devem ser feito convites.
+            </p>
+          </div>
+
+          {/* Filters */}
+          <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <div className="grid md:grid-cols-3 gap-4">
+              {/* Search */}
+              <div>
+                <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
+                  <MagnifyingGlassIcon className="w-4 h-4 mr-1" />
+                  Buscar Evento
+                </label>
+                <input
+                  type="text"
+                  placeholder="Digite para buscar..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent-500 focus:border-transparent outline-none transition"
+                />
+              </div>
+
+              {/* Month Filter */}
+              <div>
+                <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
+                  <CalendarIcon className="w-4 h-4 mr-1" />
+                  Filtrar por Mês
+                </label>
+                <select
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent-500 focus:border-transparent outline-none transition bg-white"
+                >
+                  {months.map((month) => (
+                    <option key={month} value={month}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Congregation Filter */}
+              <div>
+                <label className="flex items-center text-sm font-semibold text-gray-700 mb-2">
+                  <BuildingLibraryIcon className="w-4 h-4 mr-1" />
+                  Filtrar por Congregação
+                </label>
+                <select
+                  value={selectedCongregation}
+                  onChange={(e) => setSelectedCongregation(e.target.value)}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent-500 focus:border-transparent outline-none transition bg-white"
+                >
+                  <option value="Todas">Todas as Congregações</option>
+                  {congregations.map((cong) => (
+                    <option key={cong} value={cong}>
+                      {cong}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Results Count */}
+            <div className="mt-4 text-center">
+              <span className="inline-block bg-accent-100 text-accent-800 px-4 py-2 rounded-full text-sm font-semibold">
+                {filteredEvents.length} evento(s) encontrado(s)
+              </span>
+            </div>
+          </div>
+
+          {/* Events List */}
+          <div className="space-y-8">
+            {Object.keys(eventsByMonth).length === 0 ? (
+              <div className="text-center py-12 bg-white rounded-2xl shadow">
+                <p className="text-gray-500 text-lg">
+                  Nenhum evento encontrado com os filtros selecionados.
+                </p>
+              </div>
+            ) : (
+              Object.entries(eventsByMonth).map(([month, events]) => (
+                <div key={month} className="bg-white rounded-2xl shadow-lg overflow-hidden">
+                  {/* Month Header */}
+                  <div className="bg-gradient-to-r from-primary-700 to-accent-700 px-6 py-4">
+                    <h3 className="text-2xl font-bold text-white">{month}</h3>
+                  </div>
+
+                  {/* Events Table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead className="bg-gray-50 border-b-2 border-gray-200">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Congregação
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Dia
+                          </th>
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
+                            Evento
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-gray-200">
+                        {events.map((event, index) => (
+                          <tr
+                            key={index}
+                            className="hover:bg-accent-50 transition-colors"
+                          >
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
+                                {event.congregation}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap">
+                              <span className="text-gray-900 font-semibold">
+                                {event.day}
+                              </span>
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="text-gray-700">{event.event}</span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Agenda;
+
+import { goals2026, reforms, leadership } from '../data/goals';
+import { WrenchScrewdriverIcon } from '@heroicons/react/24/outline';
+
+const Alvos = () => {
+  return (
+    <section id="alvos" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-800 mb-4">
+              ALVOS PARA ANO DE 2026
+            </h2>
+            <div className="w-24 h-1 bg-accent-500 mx-auto"></div>
+          </div>
+
+          {/* Goals Grid */}
+          <div className="grid md:grid-cols-2 gap-6 mb-16">
+            {goals2026.map((goal) => (
+              <div
+                key={goal.id}
+                className="bg-gradient-to-br from-accent-50 to-primary-50 rounded-xl p-6 shadow-lg border-l-4 border-accent-500 hover:shadow-xl transition-shadow"
+              >
+                <div className="flex items-start mb-4">
+                  <div className="bg-accent-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold mr-3 flex-shrink-0">
+                    {goal.id}
+                  </div>
+                  <h3 className="text-xl font-bold text-primary-800">{goal.title}</h3>
+                </div>
+                <div className="pl-11 space-y-2">
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-primary-700">ATUALMENTE</span>{' '}
+                    {goal.current}
+                  </p>
+                  <p className="text-gray-700">
+                    <span className="font-semibold text-accent-700">NOSSA META É</span>{' '}
+                    {goal.goal}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Reforms Section */}
+          <div className="bg-gradient-to-br from-primary-100 to-accent-100 rounded-2xl p-8 mb-16 shadow-xl">
+            <h3 className="text-3xl font-bold text-primary-800 mb-6 flex items-center">
+              <span className="bg-primary-700 text-white rounded-full w-10 h-10 flex items-center justify-center mr-3">
+                <WrenchScrewdriverIcon className="w-6 h-6" />
+              </span>
+              REFORMAS EM ANALISE:
+            </h3>
+            <ul className="space-y-3">
+              {reforms.map((reform, index) => (
+                <li
+                  key={index}
+                  className="flex items-start bg-white rounded-lg p-4 shadow hover:shadow-md transition-shadow"
+                >
+                  <span className="text-accent-600 font-bold mr-3 text-lg">
+                    {index + 1}.
+                  </span>
+                  <span className="text-gray-700">{reform}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 text-center text-primary-700 font-semibold italic bg-white rounded-lg p-3">
+              TODAS AS REFORMAS POR MAIS SIMPLES DEVEM PASSAR POR REUNIÃO E APROVAÇÃO DA DIRETORIA,
+              COM 3 ORÇAMENTOS DE CUSTOS
+            </p>
+          </div>
+
+          {/* Leadership Directives */}
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-xl">
+            <h3 className="text-3xl font-bold text-blue-900 mb-6">
+              ALGUMAS DIRETRIZES PARA LIDERANÇA
+            </h3>
+
+            <div className="space-y-6">
+              <p className="text-gray-700 leading-relaxed">
+                <span className="font-semibold">Escolher Obreiros (as)</span> para cada Deptos:
+              </p>
+
+              {leadership.map((item, index) => (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl p-6 shadow-md border-l-4 border-blue-500"
+                >
+                  <h4 className="font-bold text-blue-900 mb-2 text-lg">
+                    {item.title}
+                  </h4>
+                  <p className="text-gray-700 italic">
+                    {item.task}
+                  </p>
+                </div>
+              ))}
+
+              <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-green-500">
+                <h4 className="font-bold text-green-900 mb-2 text-lg">
+                  Missões e Evangelismo:
+                </h4>
+                <p className="text-gray-700 italic">
+                  Realização de Cultos mensais, preparar toalha Missionária para irmãos, realizar
+                  cultos no Templo Sede atender visitas, solicitar folhetos no Templo sede para
+                  evangelismo, ter a lista de Semeadores de Missões pedir individualmente para
+                  irmãos.
+                </p>
+              </div>
+
+              <div className="bg-white rounded-xl p-6 shadow-md border-l-4 border-purple-500">
+                <h4 className="font-bold text-purple-900 mb-2 text-lg">
+                  E.B D.:
+                </h4>
+                <p className="text-gray-700 italic">
+                  (organizar classes, principalmente Infantil)
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Alvos;
+
+import { UserGroupIcon, CalendarDaysIcon, CakeIcon, BriefcaseIcon } from '@heroicons/react/24/outline';
+
+const Diretrizes = () => {
+  const reunioes = [
+    { title: "1ª Reunião JANEIRO", date: "DIA 18 COM 9H MANHÃ" },
+    { title: "2ª Reunião MAIO", date: "DIA 03 DOM 9H" },
+    { title: "3ª Reunião NOVEMBRO", date: "01 DOM 9H" },
+  ];
+
+  return (
+    <section id="diretrizes" className="py-20 bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900 text-white">
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              DIRETRIZES PARA 2026
+            </h2>
+            <div className="w-24 h-1 bg-accent-400 mx-auto"></div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Left Column - Diretrizes Gerais */}
+            <div className="space-y-6">
+              {/* Semana de Oração */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+                <h3 className="text-2xl font-bold text-accent-300 mb-4 flex items-center">
+                  <CalendarDaysIcon className="w-8 h-8 mr-3" />
+                  SEMANA de Oração
+                </h3>
+                <p className="text-white/90 mb-2">
+                  Para Celebração da Ceia
+                </p>
+                <p className="text-accent-200 font-semibold">
+                  do Senhor e no 1º SÁBADO Consagração 8h em todas as Congregações Direção Círculo de Oração;
+                </p>
+              </div>
+
+              {/* Ceia */}
+              <div className="bg-red-600/20 backdrop-blur-md rounded-xl p-6 border-2 border-red-400">
+                <h3 className="text-2xl font-bold text-red-300 mb-4 flex items-center">
+                  <CakeIcon className="w-8 h-8 mr-3" />
+                  TODAS AS CONGREGAÇÕES CELEBRARÃO A CEIA NO 1º DOMINGO
+                </h3>
+              </div>
+
+              {/* Detalhe dos Sábados */}
+              <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 border border-white/20">
+                <ul className="space-y-3 text-white/90">
+                  <li className="flex items-start">
+                    <span className="text-accent-400 mr-2">•</span>
+                    <span>
+                      No 1º Sábado de cada mês das 8h às 11h30m Oração Consagração Círculo de Oração
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-400 mr-2">•</span>
+                    <span>
+                      A Ceia do Senhor nas Congregações será realizado sempre no 1º Domingo de cada mês 19h
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-accent-400 mr-2">•</span>
+                    <span>
+                      Na Celebração da Ceia do Senhor fazer um apelo na Oferta e se possível preparar uma toalha para o Altar. (Cada congregação deve virem lavar toalha Sede)
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Reuniões Presbitério */}
+              <div className="bg-accent-600/20 backdrop-blur-md rounded-xl p-6 border-2 border-accent-400">
+                <h3 className="text-2xl font-bold text-accent-300 mb-4 flex items-center">
+                  <BriefcaseIcon className="w-8 h-8 mr-3" />
+                  REUNIÕES DO PRESBITÉRIO SERÁ REALIZADA A CADA 4 MESES
+                </h3>
+                <p className="text-white/80 text-sm mb-3">(Pré; Eva, Pós, Diá Ephesas)</p>
+                <div className="space-y-2">
+                  {reunioes.map((reuniao, index) => (
+                    <div
+                      key={index}
+                      className="bg-white/10 rounded-lg p-3 flex justify-between items-center"
+                    >
+                      <span className="font-semibold">{reuniao.title}</span>
+                      <span className="text-accent-300">{reuniao.date}</span>
+                    </div>
+                  ))}
+                </div>
+                <p className="text-white/70 text-sm mt-4 italic">
+                  (OBS: Pode ser alterada conforme programação e eventos alternativos)
+                </p>
+              </div>
+            </div>
+
+            {/* Right Column - Liderança */}
+            <div className="space-y-6">
+              {/* Liderança Box */}
+              <div className="bg-gradient-to-br from-blue-600/30 to-purple-600/30 backdrop-blur-md rounded-xl p-8 border-2 border-blue-400">
+                <div className="flex items-start mb-6">
+                  <div className="bg-blue-500 rounded-full p-3 mr-4">
+                    <UserGroupIcon className="w-8 h-8 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-blue-200 mb-2">
+                      LIDERANÇA QUE NASCE DO SERVIÇO
+                    </h3>
+                    <p className="text-white/80 italic text-sm">
+                      "Quem serve, aprende a liderar servir!"
+                    </p>
+                  </div>
+                </div>
+
+                <blockquote className="bg-white/10 rounded-lg p-4 mb-6 border-l-4 border-blue-400">
+                  <p className="text-white/90 italic text-sm leading-relaxed">
+                    "O maior entre vocês seja aquele que serve." – Jesus (Mt 23:11)
+                  </p>
+                </blockquote>
+
+                <div className="space-y-4 text-white/90">
+                  <p className="leading-relaxed">
+                    A verdadeira liderança no Reino de Deus não começa com cargos, mas com servos. Quem não aprende a servir antes de mandar, nunca será confiável para liderar. Moisés pastoreou ovelhas antes de pastorear o povo. Davi serviu no campo, derrotou o gigante, depois serviu como rei. José serviu nas masmorras, depois governou o Egito.
+                  </p>
+
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <h4 className="font-bold text-accent-300 mb-2">
+                      EXEMPLO DE LIDERANÇA NASCIDA DO SERVIÇO
+                    </h4>
+                    <p className="text-sm leading-relaxed">
+                      Antes de ser general, foi auxiliar de Moisés. Ele estava no monte, na tenda, no deserto. Ele aprendeu a servir ao líder antes de se tornar líder. Eliseu derramava água sobre as mãos do profeta. "Eliseu, que derramava água sobre as mãos do profeta." (2 Reis 3:11) Ele não começou querendo liderar — começou querendo servir. O Rei dos reis lavou os pés dos discípulos (Jo 13:4-5)
+                    </p>
+                  </div>
+
+                  <div className="bg-white/5 rounded-lg p-4">
+                    <h4 className="font-bold text-accent-300 mb-2">
+                      Jesus ensinou: Liderança que não serve vira tirania.
+                    </h4>
+                    <p className="text-sm leading-relaxed">
+                      Autoridade que não ama vira abuso. Perguntei: Seu Líder ao lembrar-se de você o que vem à mente?" "Obediência? Sempre pronto para servir? Sempre lembra de passar uma mensagem contando uma bênção? Ele tem confiança em você?"
+                    </p>
+                  </div>
+
+                  <p className="text-accent-300 font-semibold italic">
+                    Pense nisso!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Diretrizes;
+
+import { sedeLocations } from '../data/events';
+import { MapPinIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
+import logo from '../assets/images/logo.png';
+
+const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  return (
+    <footer id="contato" className="bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900 text-white">
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-12 mb-12">
+            {/* About Section */}
+            <div>
+              <div className="flex items-center space-x-3 mb-6">
+                <img 
+                  src={logo} 
+                  alt="Igreja Assembleia de Deus - Ortigueira/PR" 
+                  className="h-16 w-auto object-contain"
+                />
+                <div>
+                  <div className="font-bold text-xl leading-tight">Igreja Assembleia</div>
+                  <div className="text-sm text-accent-200">de Deus - Ortigueira/PR</div>
+                </div>
+              </div>
+              <p className="text-white/80 leading-relaxed mb-4">
+                O ano de Voltar ao Primeiro Amor - Um ano de renovação espiritual, dedicação e
+                compromisso com o Reino de Deus.
+              </p>
+              <div className="flex items-center space-x-2 text-accent-300">
+                <MapPinIcon className="w-5 h-5" />
+                <span className="text-sm">Ortigueira, Paraná - Brasil</span>
+              </div>
+            </div>
+
+            {/* Templo Sede e Congregações */}
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-accent-300">
+                Templo Sede e Congregações
+              </h3>
+              <div className="grid grid-cols-2 gap-2">
+                {sedeLocations.slice(0, 10).map((location, index) => (
+                  <div key={index} className="text-sm text-white/80 hover:text-accent-300 transition-colors">
+                    {location}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact & Leadership */}
+            <div>
+              <h3 className="text-xl font-bold mb-4 text-accent-300">Liderança</h3>
+              <div className="space-y-4">
+                <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                  <p className="text-sm text-accent-200 mb-1">Pastor Presidente</p>
+                  <p className="font-bold text-lg">Pr. Edison Camargo</p>
+                  <p className="text-sm text-white/70">Vice: Pr. Flavio Luhn</p>
+                </div>
+                <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                  <p className="text-sm text-accent-200 mb-1">União Feminina</p>
+                  <p className="font-bold text-lg">Irmã Rosana Camargo</p>
+                  <p className="text-sm text-white/70">Coordenadora Geral</p>
+                </div>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="mt-6 space-y-3">
+                <a
+                  href="https://wa.me/5541996945779"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center space-x-2 bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-full font-semibold transition-colors shadow-lg"
+                >
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+                  </svg>
+                  <span>WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Diretoria do Biênio */}
+          <div className="border-t border-white/20 pt-8 mb-8">
+            <h3 className="text-2xl font-bold text-accent-300 mb-6 text-center">
+              Diretoria deste Biênio - Ano 2025 à 2027
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6 text-sm">
+              <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                <p className="text-accent-200 font-semibold mb-2">Presidente</p>
+                <p className="text-white">Pr. Edison Camargo</p>
+                <p className="text-white/70">Vice Presidente: Pr. Flavio Luhn</p>
+              </div>
+              <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                <p className="text-accent-200 font-semibold mb-2">2º Vice Presidente</p>
+                <p className="text-white">Pr. Laudeli S dos Santos</p>
+              </div>
+              <div className="bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                <p className="text-accent-200 font-semibold mb-2">1° Gestor Financeiro</p>
+                <p className="text-white">Ev Silvio V Prado</p>
+                <p className="text-white/70">2º Gestor Financeiro: Pr. José F das Chagas</p>
+              </div>
+            </div>
+            <div className="mt-4 bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+              <p className="text-accent-200 font-semibold mb-2">Conselho Eclesiástico e de Ética</p>
+              <p className="text-white text-sm">
+                Pr. Flávio Luhn – Pr Laudeli Santos / Pr. Antônio Correa, Pr Milton Guedes,
+                Relator: Pr. Ronaldo Pescara
+              </p>
+            </div>
+            <div className="mt-4 bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+              <p className="text-accent-200 font-semibold mb-2">Conselho Fiscal</p>
+              <p className="text-white text-sm">
+                Pr.de. Ronaldo Pescara / V Pres. Pr. Milton Guedes, Relator, Interino - Ev Maicon
+                Estevão
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Bar */}
+      <div className="border-t border-white/20">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center text-sm text-white/70">
+            <p>© {currentYear} Igreja Assembleia de Deus - Ortigueira/PR. Todos os direitos reservados.</p>
+            <button
+              onClick={scrollToTop}
+              className="mt-4 md:mt-0 flex items-center space-x-2 hover:text-accent-300 transition-colors"
+            >
+              <span>Voltar ao topo</span>
+              <ArrowUpIcon className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;
+
+import { useState, useEffect } from 'react';
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import logo from '../assets/images/logo.png';
+
+const Header = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  const menuItems = [
+    { id: 'home', label: 'Início' },
+    { id: 'palavra-pastoral', label: 'Palavra Pastoral' },
+    { id: 'tema', label: 'Tema 2026' },
+    { id: 'diretrizes', label: 'Diretrizes' },
+    { id: 'agenda', label: 'Agenda' },
+    { id: 'alvos', label: 'Alvos' },
+    { id: 'contato', label: 'Contato' },
+  ];
+
+  return (
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? 'bg-white shadow-lg py-3'
+          : 'bg-gradient-to-b from-black/50 to-transparent py-5'
+      }`}
+    >
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="flex items-center space-x-3">
+            <img 
+              src={logo} 
+              alt="Igreja Assembleia de Deus - Ortigueira/PR" 
+              className="h-12 w-auto object-contain"
+            />
+            <div className={`transition-colors ${isScrolled ? 'text-gray-900' : 'text-white'}`}>
+              <div className="font-bold text-lg leading-tight">Igreja Assembleia</div>
+              <div className="text-xs opacity-80">de Deus - Ortigueira/PR</div>
+            </div>
+          </div>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-6">
+            {menuItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`font-medium hover:text-accent-500 transition-colors ${
+                  isScrolled ? 'text-gray-700' : 'text-white'
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
+          </nav>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            className={`md:hidden p-2 ${isScrolled ? 'text-gray-900' : 'text-white'}`}
+          >
+            {isMobileMenuOpen ? (
+              <XMarkIcon className="w-6 h-6" />
+            ) : (
+              <Bars3Icon className="w-6 h-6" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden mt-4 pb-4">
+            <nav className="flex flex-col space-y-3">
+              {menuItems.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`text-left px-4 py-2 rounded-lg font-medium transition-colors ${
+                    isScrolled
+                      ? 'text-gray-700 hover:bg-gray-100'
+                      : 'text-white hover:bg-white/10'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+};
+
+export default Header;
+
+import { ShieldCheckIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+
+const Hero = () => {
+  return (
+    <section
+      id="home"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900"
+    >
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')]"></div>
+      </div>
+
+      {/* Content */}
+      <div className="container mx-auto px-4 py-20 relative z-10">
+        <div className="max-w-5xl mx-auto text-center">
+          {/* Church Logo/Badge */}
+          <div className="mb-8 inline-flex items-center justify-center w-24 h-24 bg-white/10 backdrop-blur-sm rounded-full border-4 border-accent-400 shadow-2xl">
+            <ShieldCheckIcon className="w-12 h-12 text-accent-300" />
+          </div>
+
+          {/* Main Title */}
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            <span className="block text-accent-300 text-3xl md:text-4xl mb-3">
+              Janeiro de 2026
+            </span>
+            O ano de Voltar ao
+            <span className="block mt-2 text-accent-400">Primeiro AMOR</span>
+          </h1>
+
+          {/* Subtitle */}
+          <p className="text-xl md:text-2xl text-white/90 mb-4">
+            Igreja Evangélica Assembleia de Deus
+          </p>
+          <p className="text-lg md:text-xl text-accent-200 mb-8">
+            EM ORTIGUEIRA/PR
+          </p>
+
+          {/* Pastores */}
+          <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 mb-10 border border-white/20 shadow-2xl">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+              <div className="text-center md:text-right">
+                <p className="text-accent-300 font-semibold text-lg mb-2">Pastor Presidente</p>
+                <p className="text-white text-2xl font-bold">Pr. Edison Camargo</p>
+                <p className="text-white/80 text-lg">Vice Presidente: Pr. Flavio Luhn</p>
+              </div>
+              <div className="w-px h-16 bg-white/30 hidden md:block"></div>
+              <div className="text-center md:text-left">
+                <p className="text-accent-300 font-semibold text-lg mb-2">Coordenadora Geral</p>
+                <p className="text-white text-2xl font-bold">Irmã Rosana Camargo</p>
+                <p className="text-white/80 text-lg">União Feminina</p>
+              </div>
+            </div>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button
+              onClick={() =>
+                document.getElementById('agenda')?.scrollIntoView({ behavior: 'smooth' })
+              }
+              className="px-8 py-4 bg-accent-500 hover:bg-accent-600 text-white font-bold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            >
+              Ver Agenda 2026
+            </button>
+            <button
+              onClick={() =>
+                document.getElementById('palavra-pastoral')?.scrollIntoView({ behavior: 'smooth' })
+              }
+              className="px-8 py-4 bg-white/20 hover:bg-white/30 text-white font-bold rounded-full backdrop-blur-sm border-2 border-white/50 shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            >
+              Palavra Pastoral
+            </button>
+          </div>
+
+          {/* Scroll Indicator */}
+          <div className="mt-16 animate-bounce">
+            <ChevronDownIcon className="w-6 h-6 text-white/60 mx-auto" />
+          </div>
+        </div>
+      </div>
+
+      {/* Decorative Elements */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
+    </section>
+  );
+};
+
+export default Hero;
+
+import casalImage from '../assets/images/casal.jpeg';
+
+const PalavraPastoral = () => {
+  return (
+    <section id="palavra-pastoral" className="py-20 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-800 mb-4">
+              Palavra Pastoral
+            </h2>
+            <div className="w-24 h-1 bg-accent-500 mx-auto mb-6"></div>
+            <p className="text-xl text-gray-600">Janeiro de 2026</p>
+          </div>
+
+          {/* Content */}
+          <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+            {/* Header com foto */}
+            <div className="bg-gradient-to-r from-primary-700 to-accent-700 p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <img 
+                  src={casalImage} 
+                  alt="Pr. Edison e Irmã Rosana Camargo" 
+                  className="w-32 h-32 md:w-48 md:h-48 rounded-lg object-cover border-4 border-white shadow-xl"
+                />
+                <div className="text-center md:text-left text-white">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                    Pr. Edison Camargo
+                  </h3>
+                  <p className="text-lg text-accent-200 mb-1">
+                    Pastor Presidente
+                  </p>
+                  <p className="text-md text-accent-100">
+                    com Irmã Rosana Camargo
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-8 md:p-12">
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  <strong>Amados obreiros, esposas de obreiros, irmãos, irmãs e todos os membros do nosso querido Campo Eclesiástico de Ortigueira – PR,</strong>
+                  <br />
+                  <span className="text-accent-600 font-semibold">a paz do Senhor Jesus!</span>
+                </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Com o coração cheio de gratidão a Deus, dirijo-me a cada um de vocês, pedindo que Deus caminhe conosco em 2026 com dedicação, temor e compromisso com o Reino. Louvamos a Deus por tudo que Ele tem feito em nosso meio, pelas vitórias alcançadas e pelos desafios e livramentos concedidos por Ele!
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Ao olharmos para o novo tempo que se aproxima, somos conduzidos pelo Espírito Santo a refletir sobre aquilo que é essencial em nossa vida cristã. Por isso, 2026 será para nós:{" "}
+                <strong className="text-primary-800 text-xl">"O Ano de Voltar ao Primeiro Amor".</strong>
+              </p>
+
+              <blockquote className="border-l-4 border-accent-500 pl-6 py-4 my-8 bg-accent-50 italic text-gray-800">
+                Vivemos dias em que é possível estar ocupado, cumprir tarefas, exercer funções e, ainda assim, correr o risco de esfriar o coração. O Senhor, porém, nos chama de volta à simplicidade da fé, à alegria fervorosa, à devoção fiel e ao zelo pela casa de Deus e ao amor genuíno por suas almas. Assim como está escrito em Apocalipse 2:4: "Tenho, porém, contra ti que deixaste o teu primeiro amor." Essa palavra não é para condenar, mas para despertar, alinhar e restaurar.
+              </blockquote>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Voltar ao primeiro amor é voltar à simplicidade da fé, à alegria da salvação, ao compromisso fiel e ao amor que santifica a vida e nos faz servir sem obrigação, mas por paixão; não por costume, mas por convicção; não por posição, mas por amor a Cristo.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Como embaixador presidencial desde o dia primeiro de janeiro, peço e oro para que cada obreiro, cada membro deste campo eclesiástico experimente um renovo espiritual profundo. Que nossas igrejas sejam cheias da presença de Deus, que nossas lares sejam altares de adoração, e que nossas vidas reflitam a glória de Cristo em todo tempo.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mb-6">
+                Que o Senhor nos conduza em 2026 a um verdadeiro avivamento espiritual, começando em nossos corações. Voltemos ao primeiro amor, e tudo o mais será acrescentado.
+              </p>
+
+              <p className="text-gray-700 leading-relaxed mt-8">
+                Que Deus continue abençoando ricamente a todos.
+              </p>
+
+              {/* Signature */}
+              <div className="mt-12 text-right border-t pt-6">
+                <p className="text-gray-600 italic mb-1">Em Cristo,</p>
+                <p className="text-primary-800 font-bold text-xl">Pastor Presidente</p>
+                <p className="text-gray-700 font-semibold">Pr. Edson Camargo</p>
+                <p className="text-gray-600 text-sm mt-2">
+                  Igreja Assembleia de Deus – Campo Eclesiástico de Ortigueira/PR
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </section>
+  );
+};
+
+export default PalavraPastoral;
+
+import { HandRaisedIcon, BookOpenIcon, SparklesIcon } from '@heroicons/react/24/solid';
+
+const TemaPrimeiroAmor = () => {
+  const cards = [
+    {
+      title: "Voltar ao Primeiro Amor na ORAÇÃO",
+      description:
+        "Voltar ao primeiro amor na oração é reencontrar o prazer de falar com Deus sem pressa, sem rotina e sem frieza. É dobrar os joelhos com fé, reconhecendo a presença do Senhor com fé, lágrimas e dependência, permitindo que o Espírito Santo renove nossa comunhão.",
+      icon: HandRaisedIcon,
+      color: "from-blue-500 to-blue-700",
+    },
+    {
+      title: "Voltar ao Primeiro Amor na Leitura da Palavra",
+      description:
+        "Voltar ao primeiro amor na leitura da Palavra é ler a Bíblia com fome espiritual, reverência e alegria. É permitir que a Palavra de Deus fale ao coração, corrigindo, ensinando e renovando a fé. A Palavra deixa de ser rotina e volta a ser vida, direção e alimento diário para a alma.",
+      icon: BookOpenIcon,
+      color: "from-amber-500 to-amber-700",
+    },
+    {
+      title: "Voltar ao Primeiro Amor na Consagração",
+      description:
+        "Voltar ao primeiro amor na consagração é amar entregar a vida totalmente a Deus. É separar tempo, atitudes e desejos para agradar ao Senhor, buscando santidade com alegria. É viver consagrado, sem peso, e voltar a ver prazer, resposta de amor a quem nos chamou.",
+      icon: SparklesIcon,
+      color: "from-purple-500 to-purple-700",
+    },
+  ];
+
+  return (
+    <section id="tema" className="py-20 bg-white">
+      <div className="container mx-auto px-4">
+        <div className="max-w-6xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary-800 mb-4">
+              2026 ANO DE VOLTAR AO PRIMEIRO AMOR
+            </h2>
+            <div className="w-24 h-1 bg-accent-500 mx-auto"></div>
+          </div>
+
+          {/* Cards Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {cards.map((card, index) => (
+              <div
+                key={index}
+                className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100"
+              >
+                <div className={`bg-gradient-to-br ${card.color} p-6 text-center`}>
+                  <div className="flex justify-center mb-4">
+                    <card.icon className="w-16 h-16 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-white leading-tight">
+                    {card.title}
+                  </h3>
+                </div>
+                <div className="p-6">
+                  <p className="text-gray-700 leading-relaxed">{card.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Main Content Section */}
+          <div className="bg-gradient-to-br from-primary-50 to-accent-50 rounded-2xl p-8 md:p-12 shadow-xl">
+            <h3 className="text-3xl font-bold text-primary-800 mb-8 text-center">
+              ÁREAS EM QUE PRECISAMOS VOLTAR AO PRIMEIRO AMOR
+            </h3>
+
+            <div className="space-y-8">
+              {/* Item 1 */}
+              <div className="bg-white rounded-xl p-6 shadow-md">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
+                  1. Voltar ao Amor pela Presença de Deus:
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  No início, desejamos estar na presença de Deus o tempo todo. Obadias nos lembra: "Não era assim que nos conhecemos?" (TG 2)
+                </p>
+              </div>
+
+              {/* Item 2 */}
+              <div className="bg-white rounded-xl p-6 shadow-md">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
+                  2. Voltar ao Amor pela Palavra LER BÍBLIA!
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  Na conversão, é tão empolgante ler a Bíblia, mas às vezes perdemos a leitura devocional. "Não só de pão viverá o homem, mas de toda palavra que sai da boca de Deus" (Mt 4:4)
+                </p>
+              </div>
+
+              {/* Item 3 */}
+              <div className="bg-white rounded-xl p-6 shadow-md">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
+                  3. Voltar ao Amor pela Santidade:
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  O primeiro amor produz vida longa e paz com todos e a santificação. "Hb 12:14
+                </p>
+              </div>
+
+              {/* Item 4 */}
+              <div className="bg-white rounded-xl p-6 shadow-md">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
+                  4. Voltar ao Amor pela Casa de Deus:
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  Antes, a igreja era adoração. Para muitos, ela se tornou obrigação. "Alegrei-me quando disseram: Vamos à casa do Senhor" (Sl 122:1)
+                </p>
+              </div>
+
+              {/* Item 5 */}
+              <div className="bg-white rounded-xl p-6 shadow-md">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
+                  5. Voltar ao Amor pelas Almas:
+                </h4>
+                <p className="text-gray-700 leading-relaxed">
+                  O primeiro amor nos fazia falar de Jesus ao mundo e pregar o evangelho. Marcos 16:15: "Ide por todo o mundo e pregai o evangelho."
+                </p>
+              </div>
+
+              {/* Item 6 */}
+              <div className="bg-white rounded-xl p-6 shadow-md">
+                <h4 className="text-xl font-bold text-accent-700 mb-3">
+                  6. Voltar ao Amor pelo Serviço:
+                </h4>
+                <p className="text-gray-700 leading-relaxed mb-3">
+                  Antes éramos cheios de alegria, hoje muitos servem com cansaço: "Servi ao Senhor com alegria." Sl 100:2(NVI)"Alegrem-se sempre no Senhor. Novamente direi: Alegrem-se!" Fl 4:4
+                </p>
+                <p className="text-gray-600 italic text-sm mt-4">
+                  Edson Camargo, casado com Rosana, pai de Edson Jr, Ester, André, (Felipe in memorian); Serve à obra desde 1990 no Campo Eclesiástico de Ortigueira - PR
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default TemaPrimeiroAmor;
+
+import rosanaImage from '../assets/images/rosana.jpeg';
+
+const UniaoFeminina = () => {
+  return (
+    <section className="py-20 bg-gradient-to-br from-pink-50 via-white to-purple-50">
+      <div className="container mx-auto px-4">
+        <div className="max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <div className="inline-block bg-pink-100 px-4 py-2 rounded-full mb-4">
+              <span className="text-pink-600 font-semibold text-sm uppercase tracking-wide">
+                União Feminina
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-purple-900 mb-4">
+              Palavra da Coordenadora Geral da União Feminina
+            </h2>
+            <div className="w-24 h-1 bg-purple-500 mx-auto"></div>
+          </div>
+
+          {/* Content Card */}
+          <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+            {/* Header com foto */}
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-8">
+              <div className="flex flex-col md:flex-row items-center gap-6">
+                <img 
+                  src={rosanaImage} 
+                  alt="Irmã Rosana Camargo" 
+                  className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-white shadow-xl"
+                />
+                <div className="text-center md:text-left text-white">
+                  <h3 className="text-2xl md:text-3xl font-bold mb-2">
+                    Irmã Rosana Camargo
+                  </h3>
+                  <p className="text-lg text-pink-100">
+                    Coordenadora Geral da União Feminina
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="p-8 md:p-12">
+              <div className="mb-8">
+                <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                  <strong>Amadas irmãs da União Feminina do Campo Eclesiástico de Ortigueira - PR,</strong>
+                  <br />
+                  <span className="text-purple-600 font-semibold">a paz do Senhor Jesus!</span>
+                </p>
+
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  Com um coração cheio de gratidão, louvo a Deus por tudo que Ele realizou entre nós ao longo de 2025. Foram dias de aprendizado, crescimento espiritual, comunhão e muitas experiências com o Senhor. Vimos Deus fortalecer nossos lares, renovar forças, conceder vitórias e nos usar cada irmã de forma preciosa na Sua obra. Toda honra e toda glória sejam dadas ao nosso Deus!
+                </p>
+              </div>
+
+              {/* Highlighted Message */}
+              <div className="bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl p-8 mb-8 border-l-4 border-purple-500">
+                <p className="text-purple-900 font-semibold text-lg leading-relaxed mb-4">
+                  Ao olharmos para 2026, somos desafiadas a prosseguir com ânimo, fé e motivação. O Senhor nos chama a permanecer firmes, confiantes e cheias do Espírito Santo. Cada mulher tem valor, propósito e uma missão estabelecida por Deus. Não desanime diante das lutas; Deus é fiel para sustentar, renovar e conduzir a cada uma de nós.
+                </p>
+              </div>
+
+              <div className="prose prose-lg max-w-none">
+                <p className="text-gray-700 leading-relaxed mb-6">
+                  Que em 2026 sejamos mulheres mais comprometidas com a oração, com a Palavra e com a obra do Senhor; mulheres que edificam seus lares, fortalecem outras vidas e refletem o amor de Cristo por onde passam. Sigamos unidas, caminhando juntas, crendo que grandes coisas o Senhor ainda fará em nosso meio.
+                </p>
+
+                <blockquote className="border-l-4 border-pink-400 pl-6 py-4 my-8 bg-pink-50 italic text-gray-800">
+                  <p className="font-semibold text-purple-900 mb-2">
+                    Que Deus continue abençoando ricamente a vida de cada irmã da União Feminina de Ortigueira.
+                  </p>
+                </blockquote>
+
+                {/* Signature */}
+                <div className="mt-12 text-right border-t pt-6">
+                  <p className="text-gray-600 italic mb-1">Com carinho,</p>
+                  <p className="text-purple-900 font-bold text-xl">Irmã Rosana Camargo</p>
+                  <p className="text-gray-700 font-semibold">
+                    Coordenadora Geral da União Feminina
+                  </p>
+                  <p className="text-gray-600 text-sm mt-2">
+                    Campo Eclesiástico de Ortigueira - PR
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative Footer */}
+            <div className="h-2 bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default UniaoFeminina;
+

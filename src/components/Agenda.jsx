@@ -43,7 +43,7 @@ const Agenda = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-brown-800 mb-4">
               Agenda do Campo 2026
             </h2>
-            <div className="w-24 h-1 bg-gold-500 mx-auto mb-6"></div>
+            <div className="w-24 h-1 bg-accent-500 mx-auto mb-6"></div>
             <p className="text-xl text-gray-600">
               ANO DE VOLTAR AO PRIMEIRO AMOR - CONGRESSOS e EVENTOS
             </p>
@@ -66,7 +66,7 @@ const Agenda = () => {
                   placeholder="Digite para buscar..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent-500 focus:border-transparent outline-none transition"
                 />
               </div>
 
@@ -79,7 +79,7 @@ const Agenda = () => {
                 <select
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition bg-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent-500 focus:border-transparent outline-none transition bg-white"
                 >
                   {months.map((month) => (
                     <option key={month} value={month}>
@@ -98,7 +98,7 @@ const Agenda = () => {
                 <select
                   value={selectedCongregation}
                   onChange={(e) => setSelectedCongregation(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-gold-500 focus:border-transparent outline-none transition bg-white"
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-accent-500 focus:border-transparent outline-none transition bg-white"
                 >
                   <option value="Todas">Todas as Congregações</option>
                   {congregations.map((cong) => (
@@ -112,7 +112,7 @@ const Agenda = () => {
 
             {/* Results Count */}
             <div className="mt-4 text-center">
-              <span className="inline-block bg-gold-100 text-gold-800 px-4 py-2 rounded-full text-sm font-semibold">
+              <span className="inline-block bg-accent-100 text-accent-800 px-4 py-2 rounded-full text-sm font-semibold">
                 {filteredEvents.length} evento(s) encontrado(s)
               </span>
             </div>
@@ -130,7 +130,7 @@ const Agenda = () => {
               Object.entries(eventsByMonth).map(([month, events]) => (
                 <div key={month} className="bg-white rounded-2xl shadow-lg overflow-hidden">
                   {/* Month Header */}
-                  <div className="bg-gradient-to-r from-brown-700 to-gold-700 px-6 py-4">
+                  <div className="bg-gradient-to-r from-brown-700 to-accent-700 px-6 py-4">
                     <h3 className="text-2xl font-bold text-white">{month}</h3>
                   </div>
 
@@ -154,10 +154,10 @@ const Agenda = () => {
                         {events.map((event, index) => (
                           <tr
                             key={index}
-                            className="hover:bg-gold-50 transition-colors"
+                            className="hover:bg-accent-50 transition-colors"
                           >
                             <td className="px-6 py-4 whitespace-nowrap">
-                              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-brown-100 text-brown-800">
+                              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
                                 {event.congregation}
                               </span>
                             </td>
@@ -185,3 +185,4 @@ const Agenda = () => {
 };
 
 export default Agenda;
+
